@@ -1,5 +1,5 @@
 # History key
-* @readwithai - [X](https://x.com/readwithai) - [blog](https://readwithai.substack.com/)*
+*@readwithai - [X](https://x.com/readwithai) - [blog](https://readwithai.substack.com/)*
 
 For the very lazy, select a command in you zsh history by pressing a single key.
 
