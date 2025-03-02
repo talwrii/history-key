@@ -31,4 +31,4 @@ If you liked this tool you might be interested in:
 
 Also if you are interested in notetaking you might like to read my [review of note taking in Obsidian](https://readwithai.substack.com/p/note-taking-with-obsidian-much-of)
 
-You can also follow me on [X](https://x.com/readwithai) or my blog
+You can also follow me on [X](https://x.com/readwithai) or my [blog](https://readwithai.substack.com/)
