@@ -22,9 +22,9 @@ def main():
     stdin, stdout = connect_to_tty()
     choices = stdin.read().splitlines()
 
-    keys = "fjdkslarueiwoqp"
+    keys = "fjdkslarueiwoqpzmxncbcv"
 
-    mapping = dict(reversed(list(zip(keys, reversed(choices)))))
+    mapping = dict(list(zip(keys, choices)))
     _, cursor_y = cursor_position()
 
     screen = curses.initscr()

@@ -1,5 +1,11 @@
 #!/usr/bin/python3
+import argparse
 import sys
+
+PARSER = argparse.ArgumentParser(description='Select items from history')
+PARSER.add_argument('count', type=int, help="How many items to selet")
+args = PARSER.parse_args()
+
 
 choices = []
 lines = sys.stdin.read().splitlines()
@@ -7,7 +13,7 @@ for line in reversed(lines):
     if line not in choices:
         choices.append(line)
 
-    if len(choices) > 7:
+    if len(choices) > args.count:
         break
 
 for c in choices:
