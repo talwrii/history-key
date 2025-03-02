@@ -1,0 +1,14 @@
+#!/usr/bin/python3
+import sys
+
+choices = []
+lines = sys.stdin.read().splitlines()
+for line in reversed(lines):
+    if line not in choices:
+        choices.append(line)
+
+    if len(choices) > 7:
+        break
+
+for c in choices:
+    print(c)

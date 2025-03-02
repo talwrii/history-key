@@ -1,0 +1,96 @@
+#!/usr/bin/python3
+import argparse
+import curses
+import itertools
+import os
+import re
+import sys
+import termios
+import time
+import tty
+
+def connect_to_tty():
+    fd1 = os.dup(sys.stdin.fileno())
+    fd2 = os.dup(sys.stdout.fileno())
+    inf = open('/dev/tty', 'r')
+    outf = open('/dev/tty', 'w')
+    os.dup2(inf.fileno(), sys.stdin.fileno())
+    os.dup2(outf.fileno(), sys.stdout.fileno())
+    return os.fdopen(fd1), os.fdopen(fd2, "w")
+
+def main():
+    stdin, stdout = connect_to_tty()
+    choices = stdin.read().splitlines()
+
+    keys = "fjdkslarueiwoqp"
+
+    mapping = dict(reversed(list(zip(keys, reversed(choices)))))
+    _, cursor_y = cursor_position()
+
+    screen = curses.initscr()
+    curses.curs_set(0)
+    curses.cbreak()
+    try:
+        height, _ = screen.getmaxyx()
+        height = height - 1 # curses lies
+
+        for y, (k, c) in zip(positions(cursor_y - 1, height), mapping.items()):
+            screen.addstr(y, 0, f"{k} {c}\n")
+
+        screen.refresh()
+        key = read_char()
+
+        stdout.write(mapping.get(key, ""))
+
+    finally:
+        curses.endwin()
+
+def positions(y, height):
+    yield y
+
+    for k in itertools.count(1):
+        if y - k < 1:
+            break
+        yield y - k
+
+    for k in itertools.count(1):
+        if y + k > height - 1:
+            break
+        yield y + k
+
+def read_char():
+    with open("/dev/tty") as x:
+        fd = x.fileno()
+
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(fd)
+            return x.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+
+def cursor_position():
+    # https://stackoverflow.com/questions/35526014/how-can-i-get-the-cursors-position-in-an-ansi-terminal
+    term = open("/dev/tty")
+    term_out = open("/dev/tty", "w")
+    with term:
+        with term_out:
+            old_mode = termios.tcgetattr(term)
+            attr = termios.tcgetattr(term)
+            attr[3] = attr[3] & ~(termios.ECHO | termios.ICANON)
+            termios.tcsetattr(term, termios.TCSAFLUSH, attr)
+            try:
+                buf = ""
+                term_out.write("\x1b[6n")
+                term_out.flush()
+                while not (buf := buf + term.read(1)).endswith('R'):
+                    pass
+                res = re.match(r".*\[(?P<y>\d*);(?P<x>\d*)R", buf)
+            finally:
+                termios.tcsetattr(term, termios.TCSAFLUSH, old_mode)
+            if(res):
+                return (int(res.group("x")) - 1, int(res.group("y")) - 1)
+            return (-1, -1)
+
+if __name__ == '__main__':
+    main()
