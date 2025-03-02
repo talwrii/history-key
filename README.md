@@ -19,4 +19,4 @@ I use `Alt-Shift-J` which I define `bindkey "^[J" history-key`
 
 
 # Alternatives and prior work
-This tool was influened by tools like [avy] in Emacs, [Link Hints](https://addons.mozilla.org/en-GB/firefox/addon/linkhints/) and Vimperator which allow you to jump to text with a single key press.
+This tool was influened by tools like [avy](https://github.com/abo-abo/avy) in Emacs (inspired by [vim-easymotion](https://github.com/easymotion/vim-easymotion)), [Link Hints](https://addons.mozilla.org/en-GB/firefox/addon/linkhints/) and Vimperator which allow you to jump to text with a single key press.
