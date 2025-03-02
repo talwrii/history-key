@@ -1,7 +1,6 @@
 # History key
 * @readwithai - [X](https://x.com/readwithai) - [blog](https://readwithai.substack.com/)*
 
-
 For the very lazy, select a command in you zsh history by pressing a single key.
 
 # Installation
@@ -21,6 +20,9 @@ I use `Alt-Shift-J` which I define `bindkey "^[J" history-key`
 ![Demo Animation](demo.gif)
 
 # Alternatives and prior work
+You can also use Ctrl-R to search history in bash, but this uses fewer key presses.
+
+
 This tool was influened by tools like [avy](https://github.com/abo-abo/avy) in Emacs (inspired by [vim-easymotion](https://github.com/easymotion/vim-easymotion)), [Link Hints](https://addons.mozilla.org/en-GB/firefox/addon/linkhints/) and Vimperator which allow you to jump to text with a single key press.
 
 # About me
